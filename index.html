@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Diwali 2026 Countdown</title>
+  <style>
+    :root {
+      --bg-1: #1a0b2e;
+      --bg-2: #3d1a4a;
+      --accent: #ffb347;
+      --accent-strong: #ffd86b;
+      --text: #fff5e1;
+      --muted: #d8b6c9;
+    }
+
+    * { box-sizing: border-box; }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      min-height: 100vh;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--text);
+      background: radial-gradient(circle at 50% 0%, var(--bg-2) 0%, var(--bg-1) 70%);
+    }
+
+    main {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 2rem;
+      text-align: center;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(2.5rem, 8vw, 5rem);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+      background: linear-gradient(180deg, var(--accent-strong), var(--accent));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .subtitle {
+      margin: 0.5rem 0 3rem;
+      font-size: 1.1rem;
+      color: var(--muted);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    .countdown {
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 6rem;
+      padding: 1.25rem 1rem;
+      background: rgba(255, 255, 255, 0.06);
+      border: 1px solid rgba(255, 179, 71, 0.25);
+      border-radius: 12px;
+      backdrop-filter: blur(8px);
+    }
+
+    .value {
+      font-size: clamp(2rem, 6vw, 3.5rem);
+      font-weight: 700;
+      color: var(--accent-strong);
+      font-variant-numeric: tabular-nums;
+    }
+
+    .label {
+      margin-top: 0.25rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+    }
+
+    .message {
+      margin-top: 3rem;
+      font-size: 1.25rem;
+      color: var(--accent-strong);
+      min-height: 1.5em;
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Diwali 2026</h1>
+    <p class="subtitle">November 8, 2026</p>
+    <div class="countdown" aria-live="polite">
+      <div class="unit"><span class="value" id="days">--</span><span class="label">Days</span></div>
+      <div class="unit"><span class="value" id="hours">--</span><span class="label">Hours</span></div>
+      <div class="unit"><span class="value" id="minutes">--</span><span class="label">Minutes</span></div>
+      <div class="unit"><span class="value" id="seconds">--</span><span class="label">Seconds</span></div>
+    </div>
+    <p class="message" id="message"></p>
+  </main>
+
+  <script>
+    const target = new Date("2026-11-08T00:00:00").getTime();
+    const els = {
+      days: document.getElementById("days"),
+      hours: document.getElementById("hours"),
+      minutes: document.getElementById("minutes"),
+      seconds: document.getElementById("seconds"),
+      message: document.getElementById("message"),
+    };
+
+    function pad(n) { return String(n).padStart(2, "0"); }
+
+    function tick() {
+      const diff = target - Date.now();
+      if (diff <= 0) {
+        els.days.textContent = "00";
+        els.hours.textContent = "00";
+        els.minutes.textContent = "00";
+        els.seconds.textContent = "00";
+        els.message.textContent = "Happy Diwali!";
+        return false;
+      }
+      const s = Math.floor(diff / 1000);
+      els.days.textContent = pad(Math.floor(s / 86400));
+      els.hours.textContent = pad(Math.floor((s % 86400) / 3600));
+      els.minutes.textContent = pad(Math.floor((s % 3600) / 60));
+      els.seconds.textContent = pad(s % 60);
+      return true;
+    }
+
+    if (tick()) setInterval(tick, 1000);
+  </script>
+</body>
+</html>
